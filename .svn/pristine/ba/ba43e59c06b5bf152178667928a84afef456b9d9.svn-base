@@ -1,0 +1,14 @@
+<script type="text/javascript">
+	window.g = {
+		uniLoginUrl : "${frameData.uniLoginUrl}",
+		staticResRoot :  "${frameData.staticResRoot}",
+		dynamicResRoot :  "${frameData.dynamicResRoot}"
+		<#if frameData.currentUser ??>
+		,currentUser : {
+			logoutUrl : "${frameData.uniLogoutUrl}?token=${frameData.currentUser.token}",
+			loginName : "${frameData.currentUser.loginName}",
+			name : "${frameData.currentUser.name}"
+		}
+		</#if>
+	};
+</script>

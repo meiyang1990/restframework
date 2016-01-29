@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd"
+	default-autowire="byName">
+	
+	<!-- 当前用户信息数据提供者，需依赖Guardian filter -->
+	<bean id="currentUserDataProvider" class="com.netfinworks.rest.guardian.CurrentUserDataProvider"></bean>
+	<!-- 应用系统数据加载器，需要接入者提供名称为template.applicationsLoader的bean，实现ApplicationsLoader接口-->
+	<bean id="applicationsDataProvider" class="com.netfinworks.rest.template.util.ApplicationsDataProvider">
+		<property name="applicationsLoader" ref="template.applicationsLoader" />
+	</bean>
+	<!-- 应用系统模块数据加载器，需要接入者提供名称为template.applicationsLoader的bean，实现ModulesLoader接口-->
+	<bean id="modulesDataProvider" class="com.netfinworks.rest.template.util.ModulesDataProvider">
+		<property name="modulesLoader" ref="template.modulesLoader" />
+	</bean>
+
+	<!-- freemarker 框架数据提供者 -->
+	<bean id="frameDataProvider" class="com.netfinworks.restx.render.FrameMapDataProvider">
+		<property name="map">
+			<map>
+				<entry key="staticResRoot" value="${app.static.root}" />
+				<entry key="dynamicResRoot" value="${app.dynamic.root}" />
+				<entry key="uniLoginUrl" value="${app.uniLoginUrl}" />
+				<entry key="uniLogoutUrl" value="${app.uniLogoutUrl}" />
+				<entry key="currentUser" value-ref="currentUserDataProvider" />
+				<entry key="applications" value-ref="applicationsDataProvider" />
+				<entry key="modules" value-ref="modulesDataProvider" />
+				<entry key="appName" value="${app.appName}" />
+				<entry key="appTitle" value="${app.appTitle}" />
+				<entry key="staticVersion" value="${app.staticVersion}"> </entry>
+			</map>
+		</property>
+	</bean>
+	<!-- 门户首页渲染器，框架模板使用 /META-INF/html/portal.html -->
+	<bean id="portalRender" class="com.netfinworks.restx.render.FtlFragmentRender">
+		<property name="frame" value="frame/portal.html" />
+		<property name="frameDataProvider" ref="frameDataProvider" />
+		<property name="frameDataName" value="frameData" />
+		<property name="fragmentDataName" value="fragmentData" />
+		<property name="fragmentVarName" value="fragment" />
+	</bean>
+	<!-- 应用渲染器，每个应用模块可使用该渲染器，框架模板使用 /META-INF/html/application.html -->
+	<bean id="appRender" class="com.netfinworks.restx.render.FtlFragmentRender">
+		<property name="frame" value="frame/application.html" />
+		<property name="frameDataProvider" ref="frameDataProvider" />
+		<property name="frameDataName" value="frameData" />
+		<property name="fragmentDataName" value="fragmentData" />
+		<property name="fragmentVarName" value="fragment" />
+	</bean>
+	<!-- 空渲染器，当使用ajax加载一个页面片段时可使用该渲染器，模板使用 /META-INF/html/blank.html -->
+	<bean id="blankRender" class="com.netfinworks.restx.render.FtlFragmentRender">
+		<property name="frame" value="frame/blank.html" />
+		<property name="frameDataProvider" ref="frameDataProvider" />
+		<property name="frameDataName" value="frameData" />
+		<property name="fragmentDataName" value="fragmentData" />
+		<property name="fragmentVarName" value="fragment" />
+	</bean>
+	<!-- json 渲染器，将一个对象渲染为json格式 -->
+	<bean id="jsonRender" class="com.netfinworks.rest.render.JsonRender"></bean>
+	<!-- download render -->
+	<bean id="downloadRender" class="com.netfinworks.restx.render.FileDownloadRender" />
+	
+	<bean id="exceptionRender" class="com.netfinworks.restx.render.FtlExceptionRender">
+		<property name="frame" value="frame/application.html" />
+		<property name="fragmentVarName" value="fragment" />
+		<property name="frameDataProvider" ref="frameDataProvider" />
+		<property name="frameDataName" value="frameData" />
+		<property name="fragmentDataName" value="fragmentData" />
+	</bean>
+
+</beans>

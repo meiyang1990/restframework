@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PAGINATION">
+	<sql id="ORACLE_paginationStart">
+		<if test="endRow != null and startRow != null">
+			select * from (select row_.*, rownum rownum_ from (
+		</if>
+	</sql>
+	<sql id="ORACLE_paginationEnd">
+		<if test="endRow != null and startRow != null">
+			)row_
+			<if test="endRow != null">
+				where rownum &lt;= #{endRow}
+			</if>
+			)
+			<if test="startRow != null">
+				where rownum_ &gt;= #{startRow}
+			</if>
+		</if>
+	</sql>
+	<sql id="MYSQL_paginationStart">
+		<if test="offset != null and pageSize != null">
+		</if>
+	</sql>
+	<sql id="MYSQL_paginationEnd">
+		<if test="offset != null and pageSize != null">
+			LIMIT #{offset},#{pageSize}
+		</if>
+	</sql>
+</mapper>

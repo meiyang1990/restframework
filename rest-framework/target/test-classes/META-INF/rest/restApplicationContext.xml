@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+	<!-- resource -->
+	<bean class="com.netfinworks.rest.resource.mock.OrderResource"></bean>
+	<bean class="com.netfinworks.rest.resource.mock.OrderList"></bean>
+	<bean class="com.netfinworks.rest.resource.mock.StreamTestResource"></bean>
+	<bean class="com.netfinworks.rest.resource.mock.StringArrayParamTestResource"></bean>
+	<bean class="com.netfinworks.rest.resource.mock.NoParamResource"></bean>
+	<bean class="com.netfinworks.rest.resource.mock.AuthResource"></bean>
+	<bean class="com.netfinworks.rest.resource.mock.RenderWithBean" />
+	<bean class="com.netfinworks.rest.resource.mock.AuditResource" />
+	<bean class="com.netfinworks.rest.resource.mock.HeaderParamResource" />
+	<bean class="com.netfinworks.rest.resource.mock.ResourceExceptionResource" />
+	
+	<!-- check mock -->
+	<bean id="crazyUserPasswdCheck" class="com.netfinworks.rest.auth.CrazyUserPasswdCheck"></bean>
+	<!-- render mock -->
+	<bean id="mockRender" class="com.netfinworks.rest.resource.mock.RenderMock"></bean>
+	<!-- audit mock -->
+	<bean id="crazyAudit" class="com.netfinworks.rest.resource.mock.CrazyAudit" />
+</beans>

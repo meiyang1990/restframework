@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>${fragmentData.title ! '未知标题'}</title>
+<link href="${frameData.staticResRoot}/assets/css/bootstrap.min.css?${frameData.staticVersion}" rel="stylesheet" media="screen">
+<link href="${frameData.staticResRoot}/assets/css/bootstrap-theme-classic.css?${frameData.staticVersion}" rel="stylesheet" media="screen">
+<link href="${frameData.staticResRoot}/assets/css/jquery-ui-1.8.21.custom.css?${frameData.staticVersion}" rel="stylesheet">
+<link href="${frameData.staticResRoot}/applications/${frameData.appName}/css/app.css?${frameData.staticVersion}" rel="stylesheet" media="screen">
+<#include '/inc/window.g.html' />
+</head>
+<body>
+<#include '/inc/nav.html' />
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12">
+			${fragment}
+		</div>
+	</div>
+	<hr />
+	<footer>
+		<p>${fragmentData.footer ! '&copy; 钱包 2014 ~ 2015'}</p>
+	</footer>
+</div>
+</body>
+</html>

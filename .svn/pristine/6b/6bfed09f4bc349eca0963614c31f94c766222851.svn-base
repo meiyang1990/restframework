@@ -1,0 +1,9 @@
+	<div class="alert alert-block alert-error">
+	  <h4>发生错误!</h4>
+	  <#if fragmentData.data??>
+	  ${fragmentData.data.message!''}
+	  <#else>
+	  发生了未知错误，请联系管理员。
+	  </#if>
+	  <a id="backBtn" href="javascript:window.history.back()">返回</a>
+	</div>

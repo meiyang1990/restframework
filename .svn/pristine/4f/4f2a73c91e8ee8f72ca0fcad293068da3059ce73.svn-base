@@ -1,0 +1,12 @@
+<div class="well sidebar-nav">
+	<ul class="nav nav-list">
+	<!-- 
+		<li class="nav-header">统一日志查询</li>
+   -->
+   	<#if frameData.modules??>
+   	<#list frameData.modules as module>
+		<li class="<#if module.active>active</#if>" rel="leftmenu"><a href="${module.url!'#'}">${module.name!'Opps!'}</a></li>
+	</#list>
+	</#if>
+	</ul>
+</div>
